@@ -7,6 +7,6 @@ BNTPLAY.BIN is the driver supplied with the [SCC-BLaffer](https://www.msx.org/wi
 
 Download the [Zasm](https://k1.spdns.de/Develop/Projects/zasm/Distributions/) archive for Windows.
 
-Download the [BNTPLAY](https://codeload.github.com/popolonfr/Bnt-Play/zip/refs/heads/main) files from Github and copy to the chosen location on your hard drive.
+Download the [BNTPLAY](https://codeload.github.com/popolonfr/Bnt-Play/zip/refs/heads/main) files from Github.
 
 &copy; 2024 popolon-fr
