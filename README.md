@@ -1,7 +1,7 @@
 ﻿## Description
 
 BNTPLAY.BIN is the driver supplied with the [SCC-BLaffer](https://www.msx.org/wiki/SCC_Blaffer_NT_file_format) tracker developed by
-    TeddyWarez, which allows you to replay music in SCC+PSG format from a pair of .SBM and .SBK files. under Basic. This release fixes some minor issues identified with version 1.62 and the source has been converted to build with the latest version of ZASM and the version number has been updated. So you can replace the .BIN file and the .BAS FILE on the original floppy disk with this one or use it independently.
+    TeddyWarez, which allows you to replay music in SCC+PSG format from a pair of .SBM and .SBK files under Basic. This release fixes some minor issues identified with version 1.62 and the source has been converted to build with the latest version of ZASM and the version number has been updated. So you can replace the .BIN file and the .BAS FILE on the original floppy disk with this one or use it independently.
 
 ## Download the files
 
