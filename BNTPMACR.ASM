@@ -70,25 +70,25 @@ EndFcb:			equ RndRec+7
 
 RepBegin		equ EndFcb
 
-MusicPlay		equ RepBegin		; Is music playing? <>0 if so.
-MusicPeak		equ MusicPlay+1		; Is a new row started??
-SccSlot			equ MusicPeak+1		; Current SCC Slot. (slot * 16)
-SngBnkPlay		equ SccSlot+1		; Song bank
-InsBnkPlay		equ SngBnkPlay+1	; Instrument bank
-SngPos			equ InsBnkPlay+1	; Current song position
-SngRow			equ SngPos+1		; Current song row
-SngTmp			equ SngRow+1		; Current song tempo
-SngFreqs		equ SngTmp+1		; Song Frequencies
-SngVolumes		equ SngFreqs+10		; Song Volumes
-RepCommand		equ SngVolumes+5	; Replayer command
+MusicPlay		equ RepBegin			; Is music playing? <>0 if so.
+MusicPeak		equ MusicPlay+1			; Is a new row started??
+SccSlot			equ MusicPeak+1			; Current SCC Slot. (slot * 16)
+SngBnkPlay		equ SccSlot+1			; Song bank
+InsBnkPlay		equ SngBnkPlay+1		; Instrument bank
+SngPos			equ InsBnkPlay+1		; Current song position
+SngRow			equ SngPos+1			; Current song row
+SngTmp			equ SngRow+1			; Current song tempo
+SngFreqs		equ SngTmp+1			; Song Frequencies
+SngVolumes		equ SngFreqs+10			; Song Volumes
+RepCommand		equ SngVolumes+5		; Replayer command
 RepEnd			equ RepCommand+7
 
-Pr.org			equ RepEnd+1		; Original primair page
-Pr.set			equ Pr.org+1		; Primair page to set (in interrupt)
-Sec.org			equ Pr.set+1		; Original secondare page
-Sec.set			equ Sec.org+1		; Secondare page to set (in interrupt)
-Map1.org		equ Sec.set+1		; Original page 1
-Map2.org		equ Map1.org+1		; Original page 2
+Pr.org			equ RepEnd+1			; Original primair page
+Pr.set			equ Pr.org+1			; Primair page to set (in interrupt)
+Sec.org			equ Pr.set+1			; Original secondare page
+Sec.set			equ Sec.org+1			; Secondare page to set (in interrupt)
+Map1.org		equ Sec.set+1			; Original page 1
+Map2.org		equ Map1.org+1			; Original page 2
 SongPatsToSave		equ Map2.org+1
 SongPatAdrToSave	equ SongPatsToSave+1
 StackSave		equ SongPatAdrToSave+2

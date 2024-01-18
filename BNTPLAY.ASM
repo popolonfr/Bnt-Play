@@ -35,22 +35,22 @@
 verHigh		equ 1					; version H.HL
 verLowH		equ 6					;
 verLowL		equ 3					; where H  = major
-									;       H2 = minor (High)
-									;       L  = minor (Low)
+							;       H2 = minor (High)
+							;       L  = minor (Low)
 
 RomBank		equ 2					; The bank in which the replayer is stored...
 SongBank	equ 3					; The 'default' song bank
 KitBank		equ 4					; The 'default' instrument kit bank
 
 ;BasicComp	equ 1					; When 1 the replayer will be compiled with
-									; Basic use in mind (all calls and stuff)
-									;
-									; When 0 then the replayer will be compiled
-									; with ML use in mind (all functions available
-									; with 'CALLS'.
+							; Basic use in mind (all calls and stuff)
+							;
+							; When 0 then the replayer will be compiled
+							; with ML use in mind (all functions available
+							; with 'CALLS'.
 
 SilentComp	equ 0					; When <> 0 the replayer is ALWAYS silent. The
-									; loud option will then not be compiled.
+							; loud option will then not be compiled.
 
 #include "bntpmacr.asm"
 
@@ -59,8 +59,8 @@ ofs			equ $5000
 ; Start of 'ROM' code:
 
 StartRom:
-	db "AB"							; ID bytes
-	dw 0							; Init byte
+	db "AB"						; ID bytes
+	dw 0						; Init byte
 	dw StartRomCode					; Pointer
 	dw 0,0,0,0,0					; Reserved
 
@@ -268,42 +268,42 @@ ml.err102:
 
 ; From this point is the code for BASIC users and the 'actual' routines also for ML users.
 StartRomCode:
-	push hl							; Save pointer
+	push hl						; Save pointer
 
 	ld de,Identifiers
 
 NextIdent:	
-	ld hl,$fd89						; ProcNm
+	ld hl,$fd89					; ProcNm
 
 NextChar:	
-	ld a,(de)						; Compare the chars
-	cp (hl)							;
+	ld a,(de)					; Compare the chars
+	cp (hl)						;
 	jp nz,SkipLabel					; not equal, skip the rest, next identifier
-									;
-	or a							;
+							;
+	or a						;
 	jp z,IdentFound					; end marker, so identified...
-									;
-	inc hl							;
-	inc de							;
-									;
-	jp NextChar						; check next char of call
+							;
+	inc hl						;
+	inc de						;
+							;
+	jp NextChar					; check next char of call
 
 SkipLabel:	
-	ld a,(de)						; Set pointer to next identifier
-	or a							;
+	ld a,(de)					; Set pointer to next identifier
+	or a						;
 	jp z,SkipPointer				;
-									;
-	inc de							;
-									;
+							;
+	inc de						;
+							;
 	jp SkipLabel					;
 
 SkipPointer:	
-	inc de							; skip address (and terminate character)
-	inc de							;
-	inc de							;
-									;
-	ld a,(de)						; check if this was the last label
-	cp $ff							;
+	inc de						; skip address (and terminate character)
+	inc de						;
+	inc de						;
+							;
+	ld a,(de)					; check if this was the last label
+	cp $ff						;
 	jp z,IdentNotFound				; yes, so call not found
 									;
 	jp NextIdent					; no, check next label
@@ -311,7 +311,7 @@ SkipPointer:
 ;IdentNotAvail:
 	pop de
 
-	ld ix,$475a						; Illegal function call error
+	ld ix,$475a					; Illegal function call error
 	call $159
 
 	pop hl
@@ -355,10 +355,10 @@ onlyPauseText:
 
 
 IdentNotFound:	
-	pop hl							; get pointer back!
+	pop hl						; get pointer back!
 
-	scf								; Set carry flag (neccessary)
-	ret								; return to where it came from.
+	scf						; Set carry flag (neccessary)
+	ret						; return to where it came from.
 
 IdentFound:
 	xor a
@@ -367,25 +367,25 @@ IdentFound:
 
 	ex de,hl						
 
-	inc hl							; HL has pointer to address to call...
-	ld e,(hl)						; get pointer to call
+	inc hl						; HL has pointer to address to call...
+	ld e,(hl)					; get pointer to call
 
 	inc hl
 
 	ld d,(hl)
 
-	ex de,hl						; HL has pointer to call
+	ex de,hl					; HL has pointer to call
 
 	ld de,ROMCodeDone				; Return to ROMCodeDone
 	push de
 
-	jp (hl)							; Jump with call effect!
+	jp (hl)						; Jump with call effect!
 
 ROMCodeDone:
-	pop hl							; Get pointer back!
+	pop hl						; Get pointer back!
 
-	or a							; RESet carry flag! (label found)
-	ret								; Return
+	or a						; RESet carry flag! (label found)
+	ret						; Return
 
 Identifiers:
 	db "SBMLOAD",0
@@ -688,7 +688,7 @@ InvokeByte:
 	push de
 	push bc
 
-	ld ix,$521c						; Read byte (tokonized BASIC)
+	ld ix,$521c					; Read byte (tokonized BASIC)
 	call $159
 
 	pop bc
@@ -803,15 +803,15 @@ Check:
 ; out     : (scc.prim) and (scc.sec) for slot.
 ; cmnt    : none.
 
-	in a,($a8)						; set right slot.
+	in a,($a8)					; set right slot.
 	and %00001111					;
-	or d							;
-	out ($a8),a						;
-									;
+	or d						;
+	out ($a8),a					;
+							;
 	ld a,($ffff)					;
-	cpl								;
+	cpl						;
 	and %00001111					;
-	or c							;
+	or c						;
 	ld ($ffff),a					;
 
 
@@ -1206,7 +1206,7 @@ LoadSong.1:
 	ld e,a
 	ld a,(SongPatAdrToSave+1)
 	ld d,a
-	bdos 26							; Set Read address to pattern data.
+	bdos 26						; Set Read address to pattern data.
 
 	ld hl,192
 	call ReadFile					; Read Pattern
@@ -1368,7 +1368,7 @@ BuildFile:
 	push de
 	push bc
 
-	ld	ix,067d0h					; get filename
+	ld	ix,067d0h				; get filename
 	call	$159
 
 	push hl
@@ -1378,10 +1378,10 @@ BuildFile:
 	ld (StringLength),a
 
 	ld	l,(ix+1)
-	ld	h,(ix+2)					; pointer to start of string
+	ld	h,(ix+2)				; pointer to start of string
 
 	push hl
-	pop ix							; IX Now has the address which contains the name
+	pop ix						; IX Now has the address which contains the name
 
 	ld a,(StringLength)
 	or a
@@ -1663,7 +1663,7 @@ InitReplay:
 	and %11001111
 	ld b,a
 
-	ld a,(scc)						; get SCC Slot
+	ld a,(scc)					; get SCC Slot
 	or b
 	ld (SccSlot),a
 
@@ -2152,18 +2152,18 @@ AS.loop2:
 	ld b,a
 	ld a,c
 
-	or (hl)							; Add all other shit to value to slide per interrupt
-	ld (hl),a						; Set that in HL.
+	or (hl)						; Add all other shit to value to slide per interrupt
+	ld (hl),a					; Set that in HL.
 
 	inc hl
 
-	ld (hl),b						; Set how much interrupts to slide in hl
+	ld (hl),b					; Set how much interrupts to slide in hl
 
 	pop bc
 
-	inc hl							; Next volume slide channel
-	inc de							; Next auto slide channel
-
+	inc hl						; Next volume slide channel
+	inc de						; Next auto slide channel
+							
 	djnz AS.loop1	
 
 
@@ -2399,9 +2399,9 @@ CC.Pitch2UpEvent:
 	ld c,a
 	ld b,0
 
-	ld hl,Block.ModulateData		; Remove modulate
-	add hl,bc						;
-	ld (hl),0						;
+	ld hl,Block.ModulateData			; Remove modulate
+	add hl,bc					;
+	ld (hl),0					;
 
 	ld hl,Block.Pitch
 	add hl,bc
@@ -2419,9 +2419,9 @@ CC.Pitch2DownEvent:
 	ld c,a
 	ld b,0
 
-	ld hl,Block.ModulateData		; Remove modulate
-	add hl,bc						;
-	ld (hl),0						;
+	ld hl,Block.ModulateData			; Remove modulate
+	add hl,bc					;
+	ld (hl),0					;
 
 	ld hl,Block.Pitch
 	add hl,bc
@@ -2466,9 +2466,9 @@ CC.Pitch1UpEvent:
 	ld c,a
 	ld b,0
 
-	ld hl,Block.ModulateData		; Remove modulate
-	add hl,bc						;
-	ld (hl),0						;
+	ld hl,Block.ModulateData			; Remove modulate
+	add hl,bc					;
+	ld (hl),0					;
 
 	ld hl,Block.Pitch
 	add hl,bc
@@ -2503,9 +2503,9 @@ CC.Pitch1DownEvent:
 	ld c,a
 	ld b,0
 
-	ld hl,Block.ModulateData		; Remove modulate
-	add hl,bc						;
-	ld (hl),0						;
+	ld hl,Block.ModulateData			; Remove modulate
+	add hl,bc					;
+	ld (hl),0					;
 
 	ld hl,Block.Pitch
 	add hl,bc
@@ -2623,12 +2623,12 @@ VS.loop2:
 	ld b,a
 	ld a,c
 
-	or (hl)							; Add all other shit to value to slide per interrupt
-	ld (hl),a						; Set that in HL.
+	or (hl)						; Add all other shit to value to slide per interrupt
+	ld (hl),a					; Set that in HL.
 
 	inc hl
 
-	ld (hl),b						; Set how much interrupts to slide in hl
+	ld (hl),b					; Set how much interrupts to slide in hl
 
 	jp CC.Done
 
@@ -2692,12 +2692,12 @@ CC.OffEvent:
 	ld b,0
 
 	ld hl,Block.Pitch				; Remove pitch bend
-	add hl,bc						;
-	ld (hl),0						;
+	add hl,bc					;
+	ld (hl),0					;
 
-	ld hl,Block.ModulateData		; Remove modulate
-	add hl,bc						;
-	ld (hl),0						;
+	ld hl,Block.ModulateData			; Remove modulate
+	add hl,bc					;
+	ld (hl),0					;
 
 
 	jp CC.Done
@@ -2744,13 +2744,13 @@ CC.OutNewFreq:
 	jp nz,CC.NoPitchRemove
 
 	ld hl,Block.Pitch				; Remove pitch bend
-	sla e							;
-	add hl,de						;
-	ld (hl),0						;
+	sla e						;
+	add hl,de					;
+	ld (hl),0					;
 
-	ld hl,Block.ModulateData		; Remove modulate
-	add hl,de						;
-	ld (hl),0						;
+	ld hl,Block.ModulateData			; Remove modulate
+	add hl,de					;
+	ld (hl),0					;
 
 CC.NoPitchRemove:
 	exx
@@ -3325,7 +3325,7 @@ TmpCount:
 	db 0
 NowAddress:
 	dw 0
-Detune:								; current detune settings
+Detune:							; current detune settings
 	.ds 5
 LastPosDone:
 	db 0
@@ -3372,7 +3372,7 @@ Block.ModulateData:
 	ds 10
 
 Block.Modulate:
-	db 0				; modulate is executed once per 3 interrupts.
+	db 0						; modulate is executed once per 3 interrupts.
 
 Block.VolumeSlides:
 ; byte 1:	bit   5: Volume slide on (1) or off (0)			(channel 1)
@@ -3551,25 +3551,25 @@ psgNotEnded:
 	jp c,PSGMakeNewTempo
 
 PSGNoCommand:
-	inc hl							; Set HL to PSG frequencies
+	inc hl						; Set HL to PSG frequencies
 
-	ld b,3							; 3 PSG channels to out to.
-	ld c,0							; First PSG register
-	ld e,1							; For tones to be set off
+	ld b,3						; 3 PSG channels to out to.
+	ld c,0						; First PSG register
+	ld e,1						; For tones to be set off
 PSGOutFreqLoop1:
-	ld d,(hl)						; check if Freq = 0
-									;
-	inc hl							;
-									;
-	ld a,(hl)						;
-									;
-	or d							; if freq = 0 then
-	jp z,NoPSGFreqChange			; jump to ..
+	ld d,(hl)					; check if Freq = 0
+							;
+	inc hl						;
+							;
+	ld a,(hl)					;
+							;
+	or d						; if freq = 0 then
+	jp z,NoPSGFreqChange				; jump to ..
 
 
 	ld a,(hl)
 
-	dec hl							; Set HL to original address
+	dec hl						; Set HL to original address
 
 	bit 5,a
 	jp nz,PSGOutFreqDown
@@ -3577,25 +3577,25 @@ PSGOutFreqLoop1:
 	bit 6,a
 	jp nz,PSGOutFreqUp
 
-	ld a,c							; Out register to PSG
-	out ($a0),a						;
+	ld a,c						; Out register to PSG
+	out ($a0),a					;
 
-	ld a,(hl)						; Out LSByte to PSG
-	out ($a1),a						;
+	ld a,(hl)					; Out LSByte to PSG
+	out ($a1),a					;
 
-	inc hl							; increase address
-	inc c							; increase PSG reg.
+	inc hl						; increase address
+	inc c						; increase PSG reg.
 
-	ld a,(hl)						; Get MSByte of freq
+	ld a,(hl)					; Get MSByte of freq
 
-	bit 4,a							; check if it is OFF
-	jp z,PSGOutFreqNotOff			; nope.
+	bit 4,a						; check if it is OFF
+	jp z,PSGOutFreqNotOff				; nope.
 
-	InPSG 7							; Get reg. 7
-	or e							; set channel off
+	InPSG 7						; Get reg. 7
+	or e						; set channel off
 
-	ld d,a							;
-	OutPSG 7						; Set reg. 7
+	ld d,a						;
+	OutPSG 7					; Set reg. 7
 
 	jp PSGFreqDone					; all done, next PSG
 
@@ -3613,11 +3613,11 @@ PSGOutFreqNotOff:
 	cpl
 	ld e,a
 
-	ld a,c							; Out register to PSG
-	out ($a0),a						;
+	ld a,c						; Out register to PSG
+	out ($a0),a					;
 
-	ld a,(hl)						; Out MSByte to PSG
-	out ($a1),a						;
+	ld a,(hl)					; Out MSByte to PSG
+	out ($a1),a					;
 
 PSGFreqDone:
 	sla e
@@ -3634,7 +3634,7 @@ PSGFreqDone:
 
 	ld bc,$0308^255
 PSGVolNoiceLoop1:
-	ld a,(hl)						; Get first volume and noice
+	ld a,(hl)					; Get first volume and noice
 
 	bit 6,a
 	jp z,NoNoiceChange
@@ -4098,8 +4098,8 @@ dos2MapDone:
 ;--------------------------------------
 
 	ld a,($f342)					; Make page 1 a RAM slot
-	ld h,$40						; 
-	call enaslt						;
+	ld h,$40					; 
+	call enaslt					;
 
 	ld a,2
 	out ($fd),a
@@ -4138,13 +4138,13 @@ dos2MapDone:
 	ld (hl),%00100000
 
 	ld a,($fcc1)					; Return to BASIC Rom code (original)
-	ld h,$40						; page 1
-	call enaslt						;
+	ld h,$40					; page 1
+	call enaslt					;
 
-	ld a,3							; Initial song bank
+	ld a,3						; Initial song bank
 	ld (SngBnkPlay),a				;
 
-	ld a,4							; Initial instrument kit bank
+	ld a,4						; Initial instrument kit bank
 	ld (InsBnkPlay),a				;
 	
 	call InitMapper+ofs				; Initialise Memory mapper
@@ -4153,31 +4153,31 @@ dos2MapDone:
 	ld (MusicPlay),a
 
 
-	ret								; return to basic
+	ret						; return to basic
 
 InitMapper:
-	in a,($a8)						; get primair slot selections
+	in a,($a8)					; get primair slot selections
 
-	ld b,a							; in b
+	ld b,a						; in b
 
 	ld a,($f342)
 	and %00000011					; get primair selection of page 1 (RAM)
 	sla a
-	sla a							; rotate it to primair page 1
+	sla a						; rotate it to primair page 1
 
-	ld c,a							; for save keepin'
+	ld c,a						; for save keepin'
 
-	sla a							; rotate to primair page 2
-	sla a							;
+	sla a						; rotate to primair page 2
+	sla a						;
 
-	or c							; Get primair 1 in it too
+	or c						; Get primair 1 in it too
 
 	ld c,a
 
-	ld a,b							; get primair selection again.
+	ld a,b						; get primair selection again.
 	and %11000011					; get rid of primair page 1 and 2
 
-	or c							; get our primair selection in it..
+	or c						; get our primair selection in it..
 
 	ld (Pr.set),a
 
@@ -4185,18 +4185,18 @@ InitMapper:
 	ld a,($ffff)					; get secondare slot selection
 	cpl
 	and %11000011					; get rid of secondare slot sel. of page 1
-	ld b,a							; save it
+	ld b,a						; save it
 
 	ld a,($f342)
 	and %00001100					; get secondare selection (page 1)..
 	ld c,a
 
-	sla a							; get secondate selection (page 2)..
+	sla a						; get secondate selection (page 2)..
 	sla a
 
 	or c
 
-	or b							; get our secondare selection in it!
+	or b						; get our secondare selection in it!
 	ld (Sec.set),a
 
 	ret
