@@ -97,7 +97,7 @@ SecondarePageSave	equ PrimairPageSave+1
 
 ErrorHandAdr		equ SecondarePageSave+1
 
-RepInterrupt		equ $da00		; Replay interrupt Init
+RepInterrupt		equ $da00			; Replay interrupt Init
 
 
 DoShowText: macro point, way
